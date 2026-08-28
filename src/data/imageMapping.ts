@@ -34,6 +34,7 @@ export const IMAGE_MAP: Record<string, string> = {
   "c10q15": `${BASE}/mms/fig-034.jpg`, // Pronação e supinação do antebraço
 
   // Cap 11 – Articulação do Cotovelo
+  "c11q04": `${BASE}/mms/fig-032.jpg`, // Figura 11.5 – rádio move-se em torno da ulna (pronação/supinação)
   "c11q05": `${BASE}/mms/fig-034.jpg`, // Tríceps braquial com três cabeças
   "c11q08": `${BASE}/mms/fig-031.jpg`, // Úmero com epicôndilos
   "c11q12": `${BASE}/mms/fig-043.jpg`, // Ossos carpais
