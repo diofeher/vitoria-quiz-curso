@@ -1,0 +1,98 @@
+import { useEffect, useRef } from "react";
+import type { QuizQuestion } from "../../../types/quiz";
+import { playCorrect, playWrong } from "../../../lib/sounds";
+import styles from "./QuestionCard.module.css";
+
+interface QuestionCardProps {
+  question: QuizQuestion;
+  selectedOptionIndex: number | null;
+  isAnswered: boolean;
+  onAnswer: (optionIndex: number) => void;
+  onNext: () => void;
+}
+
+export function QuestionCard({
+  question,
+  selectedOptionIndex,
+  isAnswered,
+  onAnswer,
+  onNext,
+}: QuestionCardProps) {
+  const hasPlayedSound = useRef(false);
+
+  useEffect(() => {
+    if (isAnswered && !hasPlayedSound.current) {
+      hasPlayedSound.current = true;
+      if (selectedOptionIndex === question.correctIndex) {
+        playCorrect();
+      } else {
+        playWrong();
+      }
+    }
+    if (!isAnswered) {
+      hasPlayedSound.current = false;
+    }
+  }, [isAnswered, selectedOptionIndex, question.correctIndex]);
+
+  return (
+    <div className={styles.card}>
+      {question.imageDescription && (
+        <div className={styles.imageHint}>
+          📷 {question.imageDescription}
+        </div>
+      )}
+
+      <h3 className={styles.prompt}>{question.question}</h3>
+
+      <div className={styles.options}>
+        {question.options.map((option, index) => {
+          let optionClass = styles.option;
+          if (isAnswered) {
+            if (index === question.correctIndex) {
+              optionClass += ` ${styles.correct}`;
+            } else if (index === selectedOptionIndex) {
+              optionClass += ` ${styles.wrong}`;
+            } else {
+              optionClass += ` ${styles.dimmed}`;
+            }
+          }
+
+          return (
+            <button
+              key={index}
+              className={optionClass}
+              onClick={() => !isAnswered && onAnswer(index)}
+              disabled={isAnswered}
+            >
+              <span className={styles.optionLetter}>
+                {String.fromCharCode(65 + index)}
+              </span>
+              <span className={styles.optionLabel}>{option}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {isAnswered && (
+        <div className={styles.feedback}>
+          <p className={styles.feedbackText}>
+            {selectedOptionIndex === question.correctIndex ? (
+              <span className={styles.correctText}>
+                ✅ Correto! {question.explanation}
+              </span>
+            ) : (
+              <span className={styles.wrongText}>
+                ❌ Errado! A resposta certa é{" "}
+                <strong>{question.options[question.correctIndex]}</strong>.{" "}
+                {question.explanation}
+              </span>
+            )}
+          </p>
+          <button className={styles.nextButton} onClick={onNext}>
+            Próxima →
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
