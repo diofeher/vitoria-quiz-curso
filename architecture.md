@@ -48,9 +48,11 @@ Quiz interativo para estudo de disciplinas de Educação Física, começando com
 **Motivo:** PDFs são digitalizados (cada página = uma imagem). Não há como extrair figuras individuais automaticamente. Mapeamento manual de pergunta → página é feito em `src/data/imageMapping.ts`.
 
 **Armazenamento:**
-- `public/images/fundamentos/` — 42 imagens do PDF "Fundamentos da Cinesiologia"
-- `public/images/mms/` — 58 imagens do PDF "Cinesiologia dos MMS"
-- `pdfs/` — PDFs originais (no `.gitignore`)
+- `public/images/fundamentos/` — 42 imagens comprimidas para quiz (JPEG 800px/40%)
+- `public/images/mms/` — 58 imagens comprimidas para quiz (JPEG 800px/40%)
+- `pdfs/` — PDFs originais + page renders (no `.gitignore`)
+- `pdfs/pages/fundamentos/` — 64 páginas completas renderizadas (PNG 200 DPI via `pdftoppm`)
+- `pdfs/pages/mms/` — 72 páginas completas renderizadas (PNG 200 DPI via `pdftoppm`)
 - Offset fundamentos: fig-NNN = página (NNN+3)
 - Offset MMS: fig-NNN = página (NNN+99)
 

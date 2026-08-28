@@ -11,8 +11,8 @@
   position: relative;
   background: var(--screen-bg);
   border-radius: var(--radius-md);
-  height: min(600px, calc(100dvh - 160px));
-  padding: var(--space-lg) var(--space-md);
+  min-height: min(600px, calc(100dvh - 160px));
+  padding: var(--space-sm) var(--space-md);
   color: var(--screen-text);
   overflow-y: auto;
   overflow-x: hidden;

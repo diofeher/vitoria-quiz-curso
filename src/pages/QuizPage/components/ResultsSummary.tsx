@@ -16,6 +16,7 @@ interface ResultsSummaryProps {
   chapterId: string;
   score: number;
   total: number;
+  skipped?: number;
   isReviewMode?: boolean;
   srStats?: SRStats;
   onPlayAgain: () => void;
@@ -40,6 +41,7 @@ export function ResultsSummary({
   chapterId,
   score,
   total,
+  skipped = 0,
   isReviewMode,
   srStats,
   onPlayAgain,
@@ -64,6 +66,11 @@ export function ResultsSummary({
           {score}/{total}
         </span>
         <span className={styles.percentage}>{percentage}%</span>
+        {skipped > 0 && (
+          <span className={styles.skippedBadge}>
+            ⏭ {skipped} pulada{skipped > 1 ? "s" : ""}
+          </span>
+        )}
       </div>
 
       {isReviewMode ? (

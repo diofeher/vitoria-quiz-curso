@@ -46,6 +46,15 @@ export function QuizPage() {
     [quiz, sr],
   );
 
+  const handleSkip = useCallback(() => {
+    const q = quiz.currentQuestion;
+    if (q) {
+      // Quality 0 = "não sei" — worst rating for SR
+      sr.recordReview(q.id, 0);
+    }
+    quiz.skip();
+  }, [quiz, sr]);
+
   const allQuestions = CINESIOLOGIA_CHAPTERS.flatMap((ch) => ch.questions);
 
   const handleStartReview = useCallback(() => {
@@ -87,7 +96,9 @@ export function QuizPage() {
             question={quiz.currentQuestion}
             selectedOptionIndex={quiz.selectedOptionIndex}
             isAnswered={quiz.isAnswered}
+            isSkipped={quiz.isSkipped}
             onAnswer={handleAnswer}
+            onSkip={handleSkip}
             onNext={quiz.next}
           />
         </div>
@@ -98,6 +109,7 @@ export function QuizPage() {
           chapterId={quiz.chapterId}
           score={quiz.score}
           total={quiz.totalQuestions}
+          skipped={quiz.skipped}
           isReviewMode={quiz.isReviewMode}
           srStats={sr.stats}
           onPlayAgain={

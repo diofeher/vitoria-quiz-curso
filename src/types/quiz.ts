@@ -27,7 +27,9 @@ export interface QuizState {
   currentIndex: number;
   selectedOptionIndex: number | null;
   isAnswered: boolean;
+  isSkipped: boolean;
   score: number;
+  skipped: number;
 }
 
 export type QuizAction =
@@ -41,6 +43,7 @@ export type QuizAction =
       questions: QuizQuestion[];
     }
   | { type: "ANSWER"; optionIndex: number }
+  | { type: "SKIP" }
   | { type: "NEXT" }
   | { type: "RESTART" }
   | { type: "BACK_TO_CHAPTERS" };

@@ -7,7 +7,9 @@ export const initialQuizState: QuizState = {
   currentIndex: 0,
   selectedOptionIndex: null,
   isAnswered: false,
+  isSkipped: false,
   score: 0,
+  skipped: 0,
 };
 
 export function quizReducer(state: QuizState, action: QuizAction): QuizState {
@@ -21,7 +23,9 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
         currentIndex: 0,
         selectedOptionIndex: null,
         isAnswered: false,
+        isSkipped: false,
         score: 0,
+        skipped: 0,
       };
 
     case "START_REVIEW":
@@ -33,7 +37,9 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
         currentIndex: 0,
         selectedOptionIndex: null,
         isAnswered: false,
+        isSkipped: false,
         score: 0,
+        skipped: 0,
       };
 
     case "ANSWER": {
@@ -44,7 +50,19 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
         ...state,
         selectedOptionIndex: action.optionIndex,
         isAnswered: true,
+        isSkipped: false,
         score: isCorrect ? state.score + 1 : state.score,
+      };
+    }
+
+    case "SKIP": {
+      if (state.isAnswered) return state;
+      return {
+        ...state,
+        selectedOptionIndex: null,
+        isAnswered: true,
+        isSkipped: true,
+        skipped: state.skipped + 1,
       };
     }
 
@@ -58,6 +76,7 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
         currentIndex: nextIndex,
         selectedOptionIndex: null,
         isAnswered: false,
+        isSkipped: false,
       };
     }
 

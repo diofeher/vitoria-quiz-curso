@@ -18,7 +18,7 @@
 }
 
 .bottomEdge {
-  height: var(--space-md);
+  height: var(--space-sm);
   background: linear-gradient(
     to bottom,
     transparent,

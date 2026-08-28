@@ -30,6 +30,10 @@ export function useQuiz(chapters: Chapter[]) {
     dispatch({ type: "ANSWER", optionIndex });
   }, []);
 
+  const skip = useCallback(() => {
+    dispatch({ type: "SKIP" });
+  }, []);
+
   const next = useCallback(() => {
     dispatch({ type: "NEXT" });
   }, []);
@@ -61,6 +65,7 @@ export function useQuiz(chapters: Chapter[]) {
     start,
     startReview,
     answer,
+    skip,
     next,
     restart,
     backToChapters,

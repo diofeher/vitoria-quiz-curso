@@ -7,7 +7,9 @@ interface QuestionCardProps {
   question: QuizQuestion;
   selectedOptionIndex: number | null;
   isAnswered: boolean;
+  isSkipped: boolean;
   onAnswer: (optionIndex: number, timeMs: number) => void;
+  onSkip: () => void;
   onNext: () => void;
 }
 
@@ -15,7 +17,9 @@ export function QuestionCard({
   question,
   selectedOptionIndex,
   isAnswered,
+  isSkipped,
   onAnswer,
+  onSkip,
   onNext,
 }: QuestionCardProps) {
   const hasPlayedSound = useRef(false);
@@ -29,7 +33,9 @@ export function QuestionCard({
   useEffect(() => {
     if (isAnswered && !hasPlayedSound.current) {
       hasPlayedSound.current = true;
-      if (selectedOptionIndex === question.correctIndex) {
+      if (isSkipped) {
+        playWrong();
+      } else if (selectedOptionIndex === question.correctIndex) {
         playCorrect();
       } else {
         playWrong();
@@ -38,7 +44,7 @@ export function QuestionCard({
     if (!isAnswered) {
       hasPlayedSound.current = false;
     }
-  }, [isAnswered, selectedOptionIndex, question.correctIndex]);
+  }, [isAnswered, isSkipped, selectedOptionIndex, question.correctIndex]);
 
   return (
     <div className={styles.card}>
@@ -94,10 +100,22 @@ export function QuestionCard({
         })}
       </div>
 
+      {!isAnswered && (
+        <button className={styles.skipButton} onClick={onSkip}>
+          ⏭ Pular Pergunta
+        </button>
+      )}
+
       {isAnswered && (
         <div className={styles.feedback}>
           <p className={styles.feedbackText}>
-            {selectedOptionIndex === question.correctIndex ? (
+            {isSkipped ? (
+              <span className={styles.skippedText}>
+                ⏭ Pulada! A resposta certa é{" "}
+                <strong>{question.options[question.correctIndex]}</strong>.{" "}
+                {question.explanation}
+              </span>
+            ) : selectedOptionIndex === question.correctIndex ? (
               <span className={styles.correctText}>
                 ✅ Correto! {question.explanation}
               </span>
