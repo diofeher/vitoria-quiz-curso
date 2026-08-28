@@ -35,6 +35,10 @@ export type QuizAction =
       chapterId: string;
       questions: QuizQuestion[];
     }
+  | {
+      type: "START_REVIEW";
+      questions: QuizQuestion[];
+    }
   | { type: "ANSWER"; optionIndex: number }
   | { type: "NEXT" }
   | { type: "RESTART" }

@@ -1,4 +1,5 @@
 import { StatsProvider } from "./context/StatsContext";
+import { SpacedRepetitionProvider } from "./context/SpacedRepetitionContext";
 import { useRoute } from "./routes/useRoute";
 import { Header } from "./components/layout/Header";
 import { HomePage } from "./pages/HomePage/HomePage";
@@ -10,12 +11,14 @@ function App() {
 
   return (
     <StatsProvider>
-      <div className={styles.shell}>
-        <Header currentRoute={path} onNavigate={navigate} />
-        {path === "/" && <HomePage onNavigate={navigate} />}
-        {path === "/cinesiologia" && <QuizPage />}
-        <div className={styles.bottomEdge} />
-      </div>
+      <SpacedRepetitionProvider>
+        <div className={styles.shell}>
+          <Header currentRoute={path} onNavigate={navigate} />
+          {path === "/" && <HomePage onNavigate={navigate} />}
+          {path === "/cinesiologia" && <QuizPage />}
+          <div className={styles.bottomEdge} />
+        </div>
+      </SpacedRepetitionProvider>
     </StatsProvider>
   );
 }

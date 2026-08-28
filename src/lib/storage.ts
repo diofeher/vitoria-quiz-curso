@@ -1,4 +1,4 @@
-const NAMESPACE = "quiz-fisio";
+const NAMESPACE = "quiz-ed-fisica";
 const VERSION = "v1";
 
 function buildKey(key: string): string {

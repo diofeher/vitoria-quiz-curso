@@ -5,10 +5,19 @@ import { QUESTIONS_PER_ROUND } from "../../../quiz/generateRound";
 import { playComplete } from "../../../lib/sounds";
 import styles from "./ResultsSummary.module.css";
 
+interface SRStats {
+  total: number;
+  due: number;
+  mastered: number;
+  learning: number;
+}
+
 interface ResultsSummaryProps {
   chapterId: string;
   score: number;
   total: number;
+  isReviewMode?: boolean;
+  srStats?: SRStats;
   onPlayAgain: () => void;
   onChangeChapter: () => void;
 }
@@ -31,6 +40,8 @@ export function ResultsSummary({
   chapterId,
   score,
   total,
+  isReviewMode,
+  srStats,
   onPlayAgain,
   onChangeChapter,
 }: ResultsSummaryProps) {
@@ -55,38 +66,69 @@ export function ResultsSummary({
         <span className={styles.percentage}>{percentage}%</span>
       </div>
 
-      {chapter && (
-        <p className={styles.mode}>
-          {chapter.emoji} {chapter.title}
-        </p>
+      {isReviewMode ? (
+        <p className={styles.mode}>📅 Revisão Espaçada</p>
+      ) : (
+        chapter && (
+          <p className={styles.mode}>
+            {chapter.emoji} {chapter.title}
+          </p>
+        )
       )}
 
-      {chapterStats && (
+      {isReviewMode && srStats ? (
         <div className={styles.statsGrid}>
           <div className={styles.stat}>
-            <span className={styles.statValue}>
-              {chapterStats.bestScore}/{QUESTIONS_PER_ROUND}
-            </span>
-            <span className={styles.statLabel}>Melhor</span>
+            <span className={styles.statValue}>{srStats.due}</span>
+            <span className={styles.statLabel}>Pendentes</span>
           </div>
           <div className={styles.stat}>
-            <span className={styles.statValue}>{chapterStats.currentStreak}</span>
-            <span className={styles.statLabel}>Sequência</span>
+            <span className={styles.statValue}>{srStats.learning}</span>
+            <span className={styles.statLabel}>Aprendendo</span>
           </div>
           <div className={styles.stat}>
-            <span className={styles.statValue}>{chapterStats.bestStreak}</span>
-            <span className={styles.statLabel}>Recorde</span>
+            <span className={styles.statValue}>{srStats.mastered}</span>
+            <span className={styles.statLabel}>Dominados</span>
           </div>
           <div className={styles.stat}>
-            <span className={styles.statValue}>{chapterStats.gamesPlayed}</span>
-            <span className={styles.statLabel}>Jogos</span>
+            <span className={styles.statValue}>{srStats.total}</span>
+            <span className={styles.statLabel}>Total</span>
           </div>
         </div>
+      ) : (
+        chapterStats && (
+          <div className={styles.statsGrid}>
+            <div className={styles.stat}>
+              <span className={styles.statValue}>
+                {chapterStats.bestScore}/{QUESTIONS_PER_ROUND}
+              </span>
+              <span className={styles.statLabel}>Melhor</span>
+            </div>
+            <div className={styles.stat}>
+              <span className={styles.statValue}>
+                {chapterStats.currentStreak}
+              </span>
+              <span className={styles.statLabel}>Sequência</span>
+            </div>
+            <div className={styles.stat}>
+              <span className={styles.statValue}>
+                {chapterStats.bestStreak}
+              </span>
+              <span className={styles.statLabel}>Recorde</span>
+            </div>
+            <div className={styles.stat}>
+              <span className={styles.statValue}>
+                {chapterStats.gamesPlayed}
+              </span>
+              <span className={styles.statLabel}>Jogos</span>
+            </div>
+          </div>
+        )
       )}
 
       <div className={styles.actions}>
         <button className={styles.primaryButton} onClick={onPlayAgain}>
-          🔄 Jogar Novamente
+          {isReviewMode ? "📅 Revisar Mais" : "🔄 Jogar Novamente"}
         </button>
         <button className={styles.secondaryButton} onClick={onChangeChapter}>
           ← Trocar Capítulo

@@ -77,6 +77,59 @@
   color: var(--light-blue);
 }
 
+.allCard {
+  border-color: var(--shell-primary);
+  background: linear-gradient(
+    135deg,
+    var(--screen-bg-raised),
+    rgba(13, 115, 119, 0.12)
+  );
+  margin-bottom: var(--space-sm);
+}
+
+.allCard:hover {
+  box-shadow: 0 0 14px var(--screen-glow);
+  border-color: var(--light-blue);
+}
+
+.reviewCard {
+  border-color: var(--light-blue);
+  background: linear-gradient(
+    135deg,
+    var(--screen-bg-raised),
+    rgba(13, 115, 119, 0.08)
+  );
+  margin-bottom: var(--space-md);
+}
+
+.reviewCard:hover {
+  box-shadow: 0 0 14px var(--screen-glow);
+}
+
+.reviewCard:disabled {
+  opacity: 0.5;
+  cursor: default;
+  border-color: var(--screen-border);
+}
+
+.reviewCard:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.srStatsRow {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.srStat {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--light-blue);
+}
+
 .totalGames {
   font-family: var(--mono);
   font-size: 0.7rem;

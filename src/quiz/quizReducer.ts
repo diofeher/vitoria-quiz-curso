@@ -24,6 +24,18 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
         score: 0,
       };
 
+    case "START_REVIEW":
+      return {
+        ...state,
+        status: "in-progress",
+        chapterId: "__review__",
+        questions: action.questions,
+        currentIndex: 0,
+        selectedOptionIndex: null,
+        isAnswered: false,
+        score: 0,
+      };
+
     case "ANSWER": {
       if (state.isAnswered) return state;
       const currentQ = state.questions[state.currentIndex];

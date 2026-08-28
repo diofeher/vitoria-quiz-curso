@@ -7,7 +7,7 @@ interface QuestionCardProps {
   question: QuizQuestion;
   selectedOptionIndex: number | null;
   isAnswered: boolean;
-  onAnswer: (optionIndex: number) => void;
+  onAnswer: (optionIndex: number, timeMs: number) => void;
   onNext: () => void;
 }
 
@@ -19,6 +19,12 @@ export function QuestionCard({
   onNext,
 }: QuestionCardProps) {
   const hasPlayedSound = useRef(false);
+  const questionStartTime = useRef(Date.now());
+
+  // Reset timer when question changes
+  useEffect(() => {
+    questionStartTime.current = Date.now();
+  }, [question.id]);
 
   useEffect(() => {
     if (isAnswered && !hasPlayedSound.current) {
@@ -61,7 +67,12 @@ export function QuestionCard({
             <button
               key={index}
               className={optionClass}
-              onClick={() => !isAnswered && onAnswer(index)}
+              onClick={() => {
+                if (!isAnswered) {
+                  const elapsed = Date.now() - questionStartTime.current;
+                  onAnswer(index, elapsed);
+                }
+              }}
               disabled={isAnswered}
             >
               <span className={styles.optionLetter}>
