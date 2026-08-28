@@ -1,4 +1,13 @@
 import type { QuizQuestion, Chapter } from "../types/quiz";
+import { IMAGE_MAP } from "./imageMapping";
+
+/** Apply image paths from the mapping to questions */
+function applyImages(questions: QuizQuestion[]): QuizQuestion[] {
+  return questions.map((q) => {
+    const image = IMAGE_MAP[q.id];
+    return image ? { ...q, image } : q;
+  });
+}
 
 // ============================================================
 // CAPÍTULO 1 – Informações Básicas
@@ -2586,7 +2595,7 @@ const cap13Questions: QuizQuestion[] = [
 // ============================================================
 // Exportação dos capítulos
 // ============================================================
-export const CINESIOLOGIA_CHAPTERS: Chapter[] = [
+export const CINESIOLOGIA_CHAPTERS: Chapter[] = ([
   {
     id: "cap1",
     title: "Informações Básicas",
@@ -2667,7 +2676,7 @@ export const CINESIOLOGIA_CHAPTERS: Chapter[] = [
       "Articulações do polegar e dedos, músculos extrínsecos e intrínsecos, preensão e doenças.",
     questions: cap13Questions,
   },
-];
+] as Chapter[]).map((ch) => ({ ...ch, questions: applyImages(ch.questions) }));
 
 /** Look up a chapter by id */
 export function getChapter(id: string): Chapter | undefined {

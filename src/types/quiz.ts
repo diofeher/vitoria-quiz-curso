@@ -7,6 +7,7 @@ export interface QuizQuestion {
   correctIndex: number;
   explanation: string;
   imageDescription?: string;
+  image?: string;
 }
 
 export interface Chapter {

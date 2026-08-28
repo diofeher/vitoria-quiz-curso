@@ -42,7 +42,17 @@ export function QuestionCard({
 
   return (
     <div className={styles.card}>
-      {question.imageDescription && (
+      {question.image && (
+        <div className={styles.imageContainer}>
+          <img
+            src={question.image}
+            alt={question.imageDescription ?? "Figura do livro"}
+            className={styles.questionImage}
+          />
+        </div>
+      )}
+
+      {question.imageDescription && !question.image && (
         <div className={styles.imageHint}>
           📷 {question.imageDescription}
         </div>

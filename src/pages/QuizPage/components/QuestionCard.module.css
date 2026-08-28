@@ -4,6 +4,21 @@
   gap: var(--space-md);
 }
 
+.imageContainer {
+  border: 1px solid var(--screen-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  max-height: 300px;
+}
+
+.questionImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  max-height: 300px;
+}
+
 .imageHint {
   font-size: 0.75rem;
   color: var(--light-blue);
